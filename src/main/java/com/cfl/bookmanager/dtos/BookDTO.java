@@ -20,7 +20,7 @@ public class BookDTO {
 
     private Float price;
 
-    private String image_id;
+    private String imageId;
 
     private String author;
 
@@ -33,7 +33,7 @@ public class BookDTO {
                 this.publisher,
                 this.year,
                 this.price,
-                this.image_id,
+                this.imageId,
                 this.author,
                 this.units);
     }
