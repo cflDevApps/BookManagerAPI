@@ -20,7 +20,7 @@ public class BookController {
 
     @Autowired
     private final BookService service;
-    private final String URI_BASE = "/api/book";
+    private final String URI_BASE = "/bookManager/api/book";
 
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

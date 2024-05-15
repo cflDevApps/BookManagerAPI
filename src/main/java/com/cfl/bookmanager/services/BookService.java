@@ -1,11 +1,15 @@
 package com.cfl.bookmanager.services;
 
 import com.cfl.bookmanager.dtos.BookDTO;
+import com.cfl.bookmanager.dtos.BookingDTO;
 import com.cfl.bookmanager.entities.Book;
+import com.cfl.bookmanager.exceptions.PersistenceFailException;
 import com.cfl.bookmanager.repositories.BookRepository;
+import jakarta.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,12 +23,6 @@ public class BookService {
     @Autowired
     private final BookRepository repository;
 
-    public Long saveBook(BookDTO newBookDto){
-        Book newBookEntity = Optional.of(repository.save(newBookDto.createEntity()))
-                .orElseThrow(() -> new RuntimeException("New Book not save"));
-        return newBookEntity.getId();
-    }
-
     public Book getBookById(Long id){
         return repository.findById(id).orElse(null);
     }
@@ -37,9 +35,21 @@ public class BookService {
         return repository.findAll();
     }
 
-    public Long updateBook(BookDTO newValues){
+    public void deleteBook(Long id) {
+        repository.findById(id).ifPresent(repository::delete);
+    }
+
+    public Long saveBook(@Nonnull BookDTO newBookDto){
+        Book newBookEntity = Optional.ofNullable(repository.save(newBookDto.createEntity()))
+                .orElseThrow(() -> new PersistenceFailException("New Book not save", HttpStatus.UNPROCESSABLE_ENTITY));
+        return newBookEntity.getId();
+    }
+
+    public Long updateBook(@Nonnull BookDTO newValues){
         repository.findById(newValues.getId())
-                .orElseThrow(() -> new RuntimeException(String.format("Book not found for ID: %s", newValues.getId())));
+                .orElseThrow(() -> new PersistenceFailException(
+                        String.format("Book not found for ID: %s", newValues.getId()),
+                        HttpStatus.UNPROCESSABLE_ENTITY));
 
         Book withNewValues = newValues.createEntity();
         repository.saveAndFlush(withNewValues);
@@ -48,8 +58,9 @@ public class BookService {
 
     }
 
-    public void deleteBook(Long id) {
-        repository.findById(id).ifPresent(repository::delete);
-    }
 
+    public Long createBooking(BookingDTO dto) {
+
+        return null;
+    }
 }

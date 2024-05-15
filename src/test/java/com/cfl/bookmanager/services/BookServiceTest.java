@@ -5,14 +5,12 @@ import com.cfl.bookmanager.dtos.BookDTO;
 import com.cfl.bookmanager.entities.Book;
 import com.cfl.bookmanager.exceptions.PersistenceFailException;
 import com.cfl.bookmanager.repositories.BookRepository;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import java.util.Optional;
@@ -21,7 +19,7 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-public class BookServiceTests {
+public class BookServiceTest {
 
     @Mock
     private BookRepository repository;

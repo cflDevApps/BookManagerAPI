@@ -1,2 +1,4 @@
-package com.cfl.bookmanager.services;public class ReturnService {
+package com.cfl.bookmanager.services;
+
+public class ReturnService {
 }
